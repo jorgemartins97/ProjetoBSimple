@@ -1,4 +1,5 @@
 using System.Net;
+using System.Reflection.Metadata;
 using Domain.interfaces;
 
 namespace Domain;
@@ -19,5 +20,13 @@ public class HolidayPeriod : IHolidayPeriod
 		else
 			throw new ArgumentException("invalid arguments: start date >= end date.");
 	}
+
+	public bool IsValidPeriod(DateOnly dataInicio, DateOnly dataFim){
+		return dataInicio >= _startDate && dataFim <= _endDate;
+	}
+
+
 }
+
+
 

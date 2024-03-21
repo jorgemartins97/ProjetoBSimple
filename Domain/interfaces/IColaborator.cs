@@ -7,6 +7,6 @@ namespace Domain.interfaces
 {
     public interface IColaborator
     {
-        
+        string getName();
     }
 }

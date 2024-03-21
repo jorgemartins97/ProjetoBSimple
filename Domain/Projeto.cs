@@ -2,7 +2,7 @@ using Domain.interfaces;
 
 namespace Domain;
 
-public class Projeto : IHoliday{
+public class Projeto : IProjeto{
 
     
 }

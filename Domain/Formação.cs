@@ -4,5 +4,5 @@ namespace Domain;
 
     public class Formacao : IFormacao
     {
-        
+
     }

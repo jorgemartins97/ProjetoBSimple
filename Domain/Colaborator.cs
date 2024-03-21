@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
 using System.Net.Mail;
+using Domain.interfaces;
 
 public class Colaborator : IColaborator
 {
