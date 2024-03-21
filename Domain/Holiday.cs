@@ -1,6 +1,8 @@
+using Domain.interfaces;
+
 namespace Domain;
 
-public class Holiday
+public class Holiday : IHoliday
 {
 	private IColaborator _colaborator;
 
