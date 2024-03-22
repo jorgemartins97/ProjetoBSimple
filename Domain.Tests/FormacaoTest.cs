@@ -1,4 +1,6 @@
 namespace Domain.Tests;
+
+using System.Net.Cache;
 using Domain.interfaces;
 
 public class FormacaoTest
@@ -30,30 +32,6 @@ public class FormacaoTest
         [Fact]
         public void WhenRequestingAddPeriodoFormacao_ThenReturnPeriodoFormacao()
         {
-        // // arrange
-        // Mock<IColaborator> doubleColaborator = new Mock<IColaborator>();
-        // var formacao = new Formacao("olaamigos");
- 
-        // DateOnly dataInicio = new DateOnly(2024, 7, 1);
-        // DateOnly dataFim = new DateOnly(2024, 7, 15);
- 
-        // Mock<IPeriodoFormacaoFactory> pfFactoryDouble = new Mock<IPeriodoFormacaoFactory>();
- 
-        // Mock<PeriodoFormacao> pfDouble = new Mock<PeriodoFormacao>(dataInicio, dataFim);
- 
-        // pfFactoryDouble.Setup(pfF => pfF.createPeriodoFormacao(dataInicio, dataFim)).Returns(pfDouble.Object);
- 
-        // // act
-        // DateOnly hpDataInicio = new DateOnly(2024, 7, 1);
-        // DateOnly hpDataFim = new DateOnly(2024, 7, 15);
- 
-        // var periodoFormacao = formacao.AddPeriodoFormacao(pfFactoryDouble.Object, hpDataInicio, hpDataFim);
- 
- 
-        // // assert
-        // Assert.Equal(dataInicio, periodoFormacao.getDataInicio());
-        // Assert.Equal(dataFim, periodoFormacao.getDataFim());
-
         // arrange
             Mock<IColaborator> doubleColaborator = new Mock<IColaborator>();
             var formacao = new Formacao("olaamigos");
@@ -72,11 +50,25 @@ public class FormacaoTest
     
             var periodoFormacao = formacao.AddPeriodoFormacao(pfFactoryDouble.Object, pfDataInicio, pfDataFim);
  
- 
             // assert
             Assert.Equal(dataInicio, pfDataInicio);
             Assert.Equal(dataFim, pfDataFim);
-
         }
+
+        [Fact]
+        public void AddCompetencia_CompetenciaNaoExiste_AdicionaCompetencia()
+        {
+        // Arrange
+        var formacao = new Formacao("Desc da Formação");
+        var competenciasMock = new Mock<ICompetencias>();
+        var competenciasList = new List<ICompetencias> {competenciasMock.Object};
+
+        competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
+
+        // Act
+        formacao.AddCompetencia("Competência A", 3);
+
+        Assert.Single(competenciasList); 
     }
+        }
 

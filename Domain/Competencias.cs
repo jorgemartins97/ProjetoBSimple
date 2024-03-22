@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Domain.interfaces;
 
@@ -8,10 +9,10 @@ namespace Domain;
 
     public class Competencias : ICompetencias
     {
-          private string _strDescriçao;
-        private int _nivel;
-    
-        public Competencias(string strDescriçao, int nivel) {
+    private string _strDescriçao;
+    private int _nivel;
+
+    public Competencias(string strDescriçao, int nivel) {
             if ( isValidParameters(strDescriçao, nivel)){
                 _strDescriçao = strDescriçao;
                 _nivel = nivel;
@@ -36,4 +37,12 @@ namespace Domain;
 	    {
 		    return parameters.Any(parameter => stringToCheck.Contains(parameter));
 	    }
+
+        public bool isCompExist (string descricao, int nivel){
+            if(descricao == _strDescriçao && nivel == _nivel){
+                return true;
+            }
+            return false;
+        }
+
     }
