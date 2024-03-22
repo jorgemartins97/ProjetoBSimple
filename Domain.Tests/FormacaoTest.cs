@@ -1,5 +1,6 @@
 namespace Domain.Tests;
 
+using System.Diagnostics.Contracts;
 using System.Net.Cache;
 using Domain.interfaces;
 
@@ -56,7 +57,7 @@ public class FormacaoTest
         }
 
         [Fact]
-        public void AddCompetencia_CompetenciaNaoExiste_AdicionaCompetencia()
+        public void AddCompetenciaPrevia_CompetenciaNaoExiste_AdicionaCompetencia()
         {
         // Arrange
         var formacao = new Formacao("Desc da Formação");
@@ -66,9 +67,24 @@ public class FormacaoTest
         competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
 
         // Act
-        formacao.AddCompetencia("Competência A", 3);
+        formacao.AddCompetenciaPrevia("Competência A", 3);
 
         Assert.Single(competenciasList); 
-    }
         }
+
+        [Fact]
+        public void AddCompetenciaAdquirir_CompetenciaNaoExiste_AdicionarCompetencia(){
+            //Arrange 
+            var formacao = new Formacao("Descricao da formacao");
+            var competenciasMock = new Mock<ICompetencias>();
+            var competenciasList = new List<ICompetencias>() {competenciasMock.Object};
+
+            competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
+
+            // Act
+            formacao.AddCompetenciaPrevia("Competência B", 3);
+
+            Assert.Single(competenciasList); 
+        }
+    }
 
