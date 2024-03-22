@@ -20,4 +20,16 @@ namespace Domain;
             else
                 throw new ArgumentException("Invalid argument: colaborator and project must be non null");
         }
+
+        // public string getNomeColaborador() {
+        // return _colaborator.getName();
+        // }
+ 
+        // public IColaborator getColaborador(){
+        //     return _colaborator;
+        // }
+ 
+        // public IProjeto GetProjeto(){
+        //     return _projeto;
+        // }
     }

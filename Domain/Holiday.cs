@@ -8,7 +8,7 @@ public class Holiday : IHoliday
 
 	private List<IHolidayPeriod> _holidayPeriods = new List<IHolidayPeriod>();
 
-	public Holiday(IColaborator colab)
+	public Holiday( IColaborator colab)
 	{
 		if(colab!=null)
 			_colaborator = colab;
@@ -34,5 +34,31 @@ public class Holiday : IHoliday
             }
             return result;
         }
+
+	public List<IColaborator> GetColaboratorsWithHolidaysLongerThan(int days){
+        var result = new List<IColaborator>();
+			foreach( var period in _holidayPeriods){
+				int duration = period.CalcularNumeroDias();
+				if(duration > days){
+					if(!result.Contains(_colaborator)){
+						result.Add(_colaborator);
+					}
+				}
+			}
+		return result;	
+	}
+
+	public int getDaysColaboratorHolidayPeriod(IColaborator colaborator, DateOnly startDate, DateOnly endDate){
+            int totalDays = 0;
+			if( _colaborator.Equals(colaborator)){
+				foreach(var holidayPeriod in _holidayPeriods)
+				{
+					totalDays += holidayPeriod.CalculateTotalDays(startDate, endDate);
+				}
+			}
+			return totalDays;
+            
+    }
 }
+
 
