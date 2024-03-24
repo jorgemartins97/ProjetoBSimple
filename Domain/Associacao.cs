@@ -10,26 +10,24 @@ namespace Domain;
     {
         private IColaborator _colaborator;
  
-        private IProjeto _projeto;
 
-        public Associacao(IColaborator colab,IProjeto projeto){
-            if(colab!=null && projeto!=null){
+        public Associacao(IColaborator colab){
+            if(colab!=null ){
                 _colaborator = colab;
-                _projeto = projeto;
+
             }
             else
-                throw new ArgumentException("Invalid argument: colaborator and project must be non null");
+                throw new ArgumentException("Invalid argument: colaborator must be non null");
         }
 
-        // public string getNomeColaborador() {
-        // return _colaborator.getName();
-        // }
- 
-        // public IColaborator getColaborador(){
-        //     return _colaborator;
-        // }
- 
-        // public IProjeto GetProjeto(){
-        //     return _projeto;
-        // }
+        public IColaborator getColaborador(){
+            return _colaborator;
+        }
+
+        //Verificar se o colaborador é o mesmo ou nao 
+        public bool isContainedColaborator(IColaborator colaborator)
+        {
+            return _colaborator == colaborator;
+        }
     }
+

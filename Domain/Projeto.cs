@@ -50,5 +50,10 @@ public class Projeto : IProjeto{
     //         colaborators.Add(associacao.getColaborador());
     //     }
     //     return colaborators;
+
+    public bool isColaboratorInProject(IAssociacao associacao){
+
+		return _associations.Contains(associacao);
+	}
     
 }
