@@ -82,7 +82,7 @@ public class FormacaoTest
             competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
 
             // Act
-            formacao.AddCompetenciaPrevia("Competência B", 3);
+            formacao.AddCompetenciaAdquirir("Competência B", 3);
 
             Assert.Single(competenciasList); 
         }
