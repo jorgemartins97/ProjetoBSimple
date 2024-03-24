@@ -51,9 +51,9 @@ public class Projeto : IProjeto{
     //     }
     //     return colaborators;
 
-    public bool isColaboratorInProject(IAssociacao associacao){
+    // public bool isColaboratorInProject(IAssociacao associacao){
 
-		return _associations.Contains(associacao);
-	}
+	// 	return _associations.Contains(associacao);
+	// }
     
 }

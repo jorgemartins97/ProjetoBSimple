@@ -20,17 +20,17 @@ namespace Domain;
             _holidays.Add(holiday);
         }
 
-    //    //US9: Como gestor de projeto, quero saber qual o número de dias de férias dum colaborador do projeto num dado período
-    //     public int CalculateColaboratorHolidays(IColaborator colaborator, IProjeto projeto, DateOnly startDate, DateOnly endDate)
-    //     {
-    //         int totalDays = 0;
-    //         if (projeto.isColaboratorInProject(associacao))
-    //         {
-    //             foreach (var holiday in _holidays)
-    //                 totalDays += holiday.getDaysColaboratorHolidayPeriod(colaborator, startDate, endDate);
-    //         }
-    //         return totalDays;
-    //     }
+       //US9: Como gestor de projeto, quero saber qual o número de dias de férias dum colaborador do projeto num dado período
+        // public int CalculateColaboratorHolidays(IColaborator colaborator, IProjeto projeto, DateOnly startDate, DateOnly endDate)
+        // {
+        //     int totalDays = 0;
+        //     if (projeto.isColaboratorInProject(associacao))
+        //     {
+        //         foreach (var holiday in _holidays)
+        //             totalDays += holiday.getDaysColaboratorHolidayPeriod(colaborator, startDate, endDate);
+        //     }
+        //     return totalDays;
+        // }
     }
 
 
