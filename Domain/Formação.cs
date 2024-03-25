@@ -46,6 +46,7 @@ namespace Domain;
         // Se não existir, adiciona a nova competência à lista
         Competencias novaCompetencia = new Competencias(strDescricao, nivel);
         _competenciasPrevias.Add(novaCompetencia);
+        
         }
 
         public void AddCompetenciaAdquirir(string strDescricao, int nivel)

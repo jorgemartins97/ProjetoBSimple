@@ -44,7 +44,7 @@ public class FormacaoTest
             Mock<PeriodoFormacao> pfDouble = new Mock<PeriodoFormacao>(dataInicio, dataFim);
  
             pfFactoryDouble.Setup(hpF => hpF.NewPeriodoFormacao(dataInicio, dataFim)).Returns(pfDouble.Object);
- 
+            
             // act
             DateOnly pfDataInicio = new DateOnly(2024, 7, 1);
             DateOnly pfDataFim = new DateOnly(2024, 7, 15);
@@ -71,6 +71,7 @@ public class FormacaoTest
 
         Assert.Single(competenciasList); 
         }
+
 
         [Fact]
         public void AddCompetenciaAdquirir_CompetenciaNaoExiste_AdicionarCompetencia(){

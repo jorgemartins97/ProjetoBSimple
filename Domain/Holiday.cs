@@ -22,30 +22,37 @@ public class Holiday : IHoliday
         return holidayPeriod;
     }
 
+	 public bool HasColaborador(IColaborator colaborator){
+        if(colaborator.Equals(_colaborator))
+            return true;
+        return false;
+    }
 
 	//Obter periodos de ferias de um colaborador dentro de um intervalo de datas
-        public List<IHolidayPeriod> GetHolidayPeriodsForColaborator(IColaborator colaborator, DateOnly startDate, DateOnly endDate){
+        public List<IHolidayPeriod> GetHolidayPeriodsForColaborator(DateOnly startDate, DateOnly endDate){
             var result = new List<IHolidayPeriod>();
             foreach ( var holidayP in _holidayPeriods) {
                 if (holidayP.IsValidPeriod(startDate, endDate)){
-					if( _colaborator.Equals(colaborator))
                 	result.Add(holidayP);
                 }
             }
             return result;
         }
 
-	public List<IColaborator> GetColaboratorsWithHolidaysLongerThan(int days){
-        var result = new List<IColaborator>();
-			foreach( var period in _holidayPeriods){
-				int duration = period.CalcularNumeroDias();
-				if(duration > days){
-					if(!result.Contains(_colaborator)){
-						result.Add(_colaborator);
-					}
-				}
+	public IColaborator GetColaboratorsWithHolidaysLongerThan(int days){
+       IColaborator? colaboratorWithMoreThanXDays = null;
+	
+		foreach( var period in _holidayPeriods){
+			int duration = period.CalcularNumeroDias();
+			if(duration > days){
+				colaboratorWithMoreThanXDays = _colaborator;
 			}
-		return result;	
+		}
+		if(colaboratorWithMoreThanXDays == null)
+	   {
+			throw new ArgumentException("Colaborator must be non-null");
+	   }
+		return colaboratorWithMoreThanXDays;	
 	}
 
 	public int getDaysColaboratorHolidayPeriod(IColaborator colaborator, DateOnly startDate, DateOnly endDate){

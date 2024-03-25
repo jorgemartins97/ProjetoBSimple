@@ -21,6 +21,36 @@ public class HolidayTest
         Assert.Throws<ArgumentException>(() => new Holiday(null));
     }
 
+
+    [Fact]
+    public void HasColaborador_ShouldReturnTrue_WhenColaboratorEquals()
+    {
+        // Arrange
+        var colaboratorMock = new Mock<IColaborator>();
+        var holiday = new Holiday(colaboratorMock.Object);
+ 
+        // Act
+        var result = holiday.HasColaborador(colaboratorMock.Object);
+ 
+        // Assert
+        Assert.True(result);
+    }
+ 
+    [Fact]
+    public void HasColaborador_ShouldReturnFalse_WhenColaboratorNotEquals()
+    {
+        // Arrange
+        var colaboratorMock1 = new Mock<IColaborator>();
+        var colaboratorMock2 = new Mock<IColaborator>();
+        var holiday = new Holiday(colaboratorMock1.Object);
+ 
+        // Act
+        var result = holiday.HasColaborador(colaboratorMock2.Object);
+ 
+        // Assert
+        Assert.False(result);
+    }
+
     [Fact]
         public void WhenRequestingAddHolidayPeriod_ThenReturnHolidayPeriod()
         {
@@ -46,6 +76,7 @@ public class HolidayTest
             Assert.Equal(holidayPeriodDouble.Object, holidayPeriod);
 
         }
+
     //Obter periodos de ferias de um colaborador dentro de um intervalo de datas
     [Fact]
     public void WhenRequestingGetHolidayPeriodsForColaborator()
@@ -75,7 +106,7 @@ public class HolidayTest
         holiday.addHolidayPeriod(hpFactory.Object, startDate, endDate);
  
         // Act
-        var actual = holiday.GetHolidayPeriodsForColaborator(colaboratorDouble.Object, startDate, endDate);
+        var actual = holiday.GetHolidayPeriodsForColaborator(startDate, endDate);
  
         // Assert
         Assert.Collection(actual,
@@ -85,17 +116,12 @@ public class HolidayTest
         }
 
         [Fact]
-        public void GetColaboratorsWithHolidaysLongerThan_Should_Return_Colaborator_When_Holidays_Longer_Than_Specified() {
+        public void GetColaboratorWithHolidaysLongerThan_Should_Return_Colaborator_When_Holidays_Longer_Than_Specified() {
+        
         // Arrange
-        
+        var colabDouble = new Mock <IColaborator>();
 
-        var mockColaborator1 = new Mock<IColaborator>();
-        var mockColaborator2 = new Mock<IColaborator>();
-        
-
-        var list = new List<IColaborator>() {mockColaborator1.Object};
-
-        var holiday = new Holiday(mockColaborator1.Object);
+        var holiday = new Holiday(colabDouble.Object);
 
         var holidayPeriodFactory = new Mock<IHolidayPeriodFactory>();
 
@@ -111,10 +137,12 @@ public class HolidayTest
         var cDays = holiday.GetColaboratorsWithHolidaysLongerThan(5);
 
         //Assert
-        Assert.Single(cDays);
+        Assert.NotNull(cDays);
+        Assert.Equal(colabDouble.Object, cDays);
 
         
     }
+
 
     [Fact]
     public void CalculateTotalHolidayForColaborator_ReturnsCorrectTotalDays_WhenColaboratorHasHolidays()
