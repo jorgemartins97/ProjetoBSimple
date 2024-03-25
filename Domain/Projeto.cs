@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using Domain.interfaces;
 
 namespace Domain;
@@ -51,9 +52,16 @@ public class Projeto : IProjeto{
     //     }
     //     return colaborators;
 
-    // public bool isColaboratorInProject(IAssociacao associacao){
+    public bool isColaboratorInProject(IColaborator colaborator){
 
-	// 	return _associations.Contains(associacao);
-	// }
+		foreach(var associacao in _associations)
+        {
+            if(associacao.isContainedColaborator(colaborator))
+            {
+                return true;
+            }
+        }
+        return false;
+	}
     
 }
