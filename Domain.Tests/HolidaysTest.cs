@@ -111,5 +111,33 @@ namespace Domain.Tests
             Assert.Contains(collaborator2, result);
             Assert.Contains(collaborator3, result);
         }
+
+        [Fact]
+        public void CalculateColaboratorHolidays_ReturnsCorrectTotalDays_WhenColaboratorHasHolidaysInMultipleProjects()
+        {
+            // Arrange
+            var colabDouble = new Mock<IColaborator>().Object;
+            var projectDouble = new Mock<IProjeto>();
+            var holidays = new Holidays();
+            var holiday1 = new Mock<IHoliday>();
+            var holiday2 = new Mock<IHoliday>();
+            var hfactory = new Mock<IHolidayFactory>();
+ 
+            hfactory.SetupSequence(h => h.NewHolidays(colabDouble)).Returns(holiday1.Object).Returns(holiday2.Object);
+ 
+            holiday1.Setup(h => h.getDaysColaboratorHolidayPeriod(colabDouble, It.IsAny<DateOnly>(), It.IsAny<DateOnly>())).Returns(5);
+            holiday2.Setup(h => h.getDaysColaboratorHolidayPeriod(colabDouble, It.IsAny<DateOnly>(), It.IsAny<DateOnly>())).Returns(3);
+            projectDouble.Setup(p => p.isColaboratorInProject(colabDouble)).Returns(true);
+ 
+            holidays.AddHolidays(hfactory.Object, colabDouble);
+            holidays.AddHolidays(hfactory.Object, colabDouble);
+ 
+            // Act
+            var totalDays = holidays.CalculateColaboratorHolidays(colabDouble, projectDouble.Object, new DateOnly(2024, 3, 1), new DateOnly(2024, 3, 10));
+ 
+            // Assert
+            Assert.Equal(8, totalDays);
+        }
+        
 }
 }

@@ -33,47 +33,31 @@ namespace Domain;
         return periodoFormacao;
         }
 
-        public void AddCompetenciaPrevia(string strDescricao, int nivel)
+        public List<ICompetencias> AddCompetenciaPrevia(ICompetencias competencias)
         {
-        // Verifica se uma competência com a mesma descrição já está na lista
-        foreach(var competenciap in _competenciasPrevias)
-        {
-            if (competenciap.isCompExist(strDescricao, nivel))
-            {
-                throw new ArgumentException("Esta competência já existe.");
-            }
-        }       
-        // Se não existir, adiciona a nova competência à lista
-        Competencias novaCompetencia = new Competencias(strDescricao, nivel);
-        _competenciasPrevias.Add(novaCompetencia);
-        
+            if(competencias == null)
+                throw new ArgumentException("Competencias nao podem ser nulas!");
+                _competenciasAdquirir.Add(competencias);
+            return _competenciasAdquirir.ToList();
+            
         }
 
-        public void AddCompetenciaAdquirir(string strDescricao, int nivel)
+        public List<ICompetencias> AddCompetenciaAdquirir(List<ICompetencias> competencias)
         {
-            //verificar primeiro se a compAdquirir ja existe nas previas
-            foreach(var compAdquirir in _competenciasPrevias)
-            {
-                if (compAdquirir.isCompExist(strDescricao, nivel))
-                {
-                    throw new ArgumentException("Esta competência já existe.");
+            ValidarListaCompetencias(competencias);
+            foreach (var comp in competencias) 
+                _competenciasPrevias.Add(comp);
+            return _competenciasPrevias.ToList();
 
-                }
-            }  
+        }
 
-            //caso nao exista nas previas vamos as compAdquirir verificar se existe
-            foreach(var competencia in _competenciasAdquirir)
-            {
-                if (competencia.isCompExist(strDescricao, nivel))
-                {
-                    throw new ArgumentException("Esta competência já existe.");
-
-                }
-            }  
-            //nao existindo nas duas listas adiciona-se à lista de comp a adquirir
-            Competencias novaCompAdquirir = new Competencias(strDescricao, nivel);
-            _competenciasAdquirir.Add(novaCompAdquirir);
-
+        //Metodo para verificar se a competencia existe
+        private void ValidarListaCompetencias (List<ICompetencias> competencias)
+        {
+            if (competencias == null || !competencias.Any())
+                throw new ArgumentException("A lista nao pode ser vazia ou nula");
+            if (competencias.Any(competencias => _competenciasPrevias.Contains(competencias) || _competenciasAdquirir.Contains(competencias)))
+                throw new InvalidOperationException("Uma ou mais competencias ja estao adicionadas.");
         }
     }
     

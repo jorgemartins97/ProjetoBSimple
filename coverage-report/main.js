@@ -222,17 +222,19 @@ var assemblies = [
     "name": "Domain",
     "classes": [
       { "name": "Domain.Associacao", "rp": "Domain_Associacao.html", "cl": 9, "ucl": 3, "cal": 12, "tl": 33, "cb": 2, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.AssociationFactory", "rp": "Domain_AssociationFactory.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.Colaborator", "rp": "Domain_Colaborator.html", "cl": 31, "ucl": 3, "cal": 34, "tl": 60, "cb": 12, "tb": 12, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Competencias", "rp": "Domain_Competencias.html", "cl": 19, "ucl": 5, "cal": 24, "tl": 48, "cb": 11, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Formacao", "rp": "Domain_Formacao.html", "cl": 33, "ucl": 15, "cal": 48, "tl": 81, "cb": 8, "tb": 18, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Holiday", "rp": "Domain_Holiday.html", "cl": 44, "ucl": 0, "cal": 44, "tl": 71, "cb": 18, "tb": 18, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Competencias", "rp": "Domain_Competencias.html", "cl": 19, "ucl": 5, "cal": 24, "tl": 41, "cb": 11, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Formacao", "rp": "Domain_Formacao.html", "cl": 43, "ucl": 10, "cal": 53, "tl": 65, "cb": 14, "tb": 28, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Holiday", "rp": "Domain_Holiday.html", "cl": 55, "ucl": 0, "cal": 55, "tl": 71, "cb": 33, "tb": 34, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.HolidayFactory", "rp": "Domain_HolidayFactory.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.HolidayPeriod", "rp": "Domain_HolidayPeriod.html", "cl": 25, "ucl": 0, "cal": 25, "tl": 52, "cb": 9, "tb": 12, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.HolidayPeriodFactory", "rp": "Domain_HolidayPeriodFactory.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Holidays", "rp": "Domain_Holidays.html", "cl": 10, "ucl": 0, "cal": 10, "tl": 74, "cb": 2, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Holidays", "rp": "Domain_Holidays.html", "cl": 46, "ucl": 0, "cal": 46, "tl": 74, "cb": 18, "tb": 18, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.Periodo", "rp": "Domain_Periodo.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 27, "cb": 4, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.PeriodoFormacao", "rp": "Domain_PeriodoFormacao.html", "cl": 12, "ucl": 0, "cal": 12, "tl": 27, "cb": 4, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "Domain.PeriodoFormacaoFactory", "rp": "Domain_PeriodoFormacaoFactory.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 14, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "Domain.Projeto", "rp": "Domain_Projeto.html", "cl": 17, "ucl": 9, "cal": 26, "tl": 67, "cb": 10, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "Domain.Projeto", "rp": "Domain_Projeto.html", "cl": 42, "ucl": 10, "cal": 52, "tl": 67, "cb": 29, "tb": 34, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -254,6 +256,12 @@ var riskHotspots = [
     ]},
   {
     "assembly": "Domain", "class": "Domain.Competencias", "reportPath": "Domain_Competencias.html", "methodName": "isCompExist(System.String,System.Int32)", "methodShortName": "isCompExist(...)", "fileIndex": 0, "line": 41,
+    "metrics": [
+      { "value": 20, "exceeded": true },
+      { "value": 4, "exceeded": false },
+    ]},
+  {
+    "assembly": "Domain", "class": "Domain.Projeto", "reportPath": "Domain_Projeto.html", "methodName": "isColaboratorInProject(Domain.interfaces.IColaborator)", "methodShortName": "isColaboratorInProject(...)", "fileIndex": 0, "line": 55,
     "metrics": [
       { "value": 20, "exceeded": true },
       { "value": 4, "exceeded": false },

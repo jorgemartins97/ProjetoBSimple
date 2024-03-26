@@ -36,21 +36,20 @@ public class Projeto : IProjeto{
 		return parameters.Any(parameter => stringToCheck.Contains(parameter));
 	}
 
-    public List<IAssociacao> GetAssociacoes(){
-        return _associations;
+    public void addAssociacao(IAssociationFactory associationFactory, IColaborator colaborator){
+        if(colaborator == null)
+            throw new ArgumentNullException(nameof(colaborator), "Colaborador nao pode ser nulo.");
+        foreach (var associacao in _associations)
+        {
+            //verificar se o colaborador ja esta associado
+            if (associacao.isContainedColaborator(colaborator))
+            {
+                throw new ArgumentException("Colaborador ja esta associado ao projeto", nameof(colaborator));
+            }
+        }
+        IAssociacao newAssociation = associationFactory.NewAssociation(colaborator);
+        _associations.Add(newAssociation);
     }
-
-    public void addAssociacao(Associacao associacao){
-        _associations.Add(associacao);
-    }
-
-	// public List<IColaborator> GetColaborators(){
-    //     var colaborators = new List<IColaborator>();
-    //     foreach(IAssociacao associacao in _associations)
-    //     {
-    //         colaborators.Add(associacao.getColaborador());
-    //     }
-    //     return colaborators;
 
     public bool isColaboratorInProject(IColaborator colaborator){
 
@@ -63,5 +62,6 @@ public class Projeto : IProjeto{
         }
         return false;
 	}
+    
     
 }

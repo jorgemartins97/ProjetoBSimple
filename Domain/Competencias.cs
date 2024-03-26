@@ -38,11 +38,4 @@ namespace Domain;
 		    return parameters.Any(parameter => stringToCheck.Contains(parameter));
 	    }
 
-        public bool isCompExist (string descricao, int nivel){
-            if(descricao == _strDescriçao && nivel == _nivel){
-                return true;
-            }
-            return false;
-        }
-
     }

@@ -57,35 +57,41 @@ public class FormacaoTest
         }
 
         [Fact]
-        public void AddCompetenciaPrevia_CompetenciaNaoExiste_AdicionaCompetencia()
+        public void AddCompetenciaPrevia_Deve_AdicionarCompetenciaPreviaCorretamente()
         {
-        // Arrange
-        var formacao = new Formacao("Desc da Formação");
-        var competenciasMock = new Mock<ICompetencias>();
-        var competenciasList = new List<ICompetencias> {competenciasMock.Object};
+            // Arrange
+            var competencia1Mock = new Mock<ICompetencias>();
+            
+            var formacao = new Formacao("Formacao 1");
 
-        competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
+            // Act
+            var result = formacao.AddCompetenciaPrevia(competencia1Mock.Object);
 
-        // Act
-        formacao.AddCompetenciaPrevia("Competência A", 3);
-
-        Assert.Single(competenciasList); 
+            // Assert
+            Assert.Single(result);
+            Assert.Equal(competencia1Mock.Object, result.Single());
         }
 
 
         [Fact]
-        public void AddCompetenciaAdquirir_CompetenciaNaoExiste_AdicionarCompetencia(){
-            //Arrange 
-            var formacao = new Formacao("Descricao da formacao");
-            var competenciasMock = new Mock<ICompetencias>();
-            var competenciasList = new List<ICompetencias>() {competenciasMock.Object};
+        public void AddCompetenciaAdquirir_AdicionaCompetenciasCorretamente()
+        {
+        // Arrange
+        var competencia1 = new Mock<ICompetencias>();
+        var competencia2 = new Mock<ICompetencias>();
 
-            competenciasMock.Setup(c => c.isCompExist(It.IsAny<string>(), It.IsAny<int>())).Returns(false);
+        var listaCompetencias = new List<ICompetencias> { competencia1.Object, competencia2.Object };
 
-            // Act
-            formacao.AddCompetenciaAdquirir("Competência B", 3);
+        var suaClasse = new Formacao("Formacao"); // Substitua 'SuaClasse' pelo nome da sua classe que contém o método AddCompetenciaAdquirir
 
-            Assert.Single(competenciasList); 
+        // Act
+        var result = suaClasse.AddCompetenciaAdquirir(listaCompetencias);
+
+        // Assert
+        Assert.Equal(2, result.Count); // Verifica se o número de competências após a adição está correto
+        Assert.Contains(competencia1.Object, result); // Verifica se a primeira competência foi adicionada corretamente
+        Assert.Contains(competencia2.Object, result); // Verifica se a segunda competência foi adicionada corretamente
         }
+
     }
 
