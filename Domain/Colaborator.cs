@@ -5,8 +5,11 @@ using Domain.interfaces;
 
 public class Colaborator : IColaborator
 {
-    private string _strName;
-    private object _strEmail;
+    public string _strName {get; set;}
+    public string _strEmail {get; set;}
+	public long Id {get; set;}
+
+	public Colaborator(){}
 
     public Colaborator(string strName, string strEmail) {
 

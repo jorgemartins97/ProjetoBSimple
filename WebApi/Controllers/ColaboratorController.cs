@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace WebApi.Controllers
 {
@@ -18,7 +22,7 @@ namespace WebApi.Controllers
 
         // GET: api/Colaborator
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Colaborator>>> GetColaborators()
+        public async Task<ActionResult<IEnumerable<Colaborator>>> GetColaborator()
         {
             return await _context.Colaborator.ToListAsync();
         }
@@ -38,6 +42,7 @@ namespace WebApi.Controllers
         }
 
         // PUT: api/Colaborator/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutColaborator(long id, Colaborator colaborator)
         {
@@ -68,13 +73,14 @@ namespace WebApi.Controllers
         }
 
         // POST: api/Colaborator
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Colaborator>> PostColaborator(Colaborator colaborator)
         {
             _context.Colaborator.Add(colaborator);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetColaborator), new { id = colaborator.Id }, colaborator);
+            return CreatedAtAction("GetColaborator", new { id = colaborator.Id }, colaborator);
         }
 
         // DELETE: api/Colaborator/5

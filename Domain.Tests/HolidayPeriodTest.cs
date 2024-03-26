@@ -8,7 +8,10 @@ namespace Domain.Tests
         {
             var dataIn = DateOnly.Parse(dataInicio);
             var dataF = DateOnly.Parse(dataFim);
-            new HolidayPeriod(dataIn, dataF);
+            var hPeriod = new HolidayPeriod(dataIn, dataF);
+
+            Assert.Equal(dataIn, hPeriod._startDate);
+            Assert.Equal(dataF, hPeriod._endDate);
         }
 
         [Theory]
@@ -18,10 +21,11 @@ namespace Domain.Tests
             var dataIn = DateOnly.Parse(dataInicio);
             var dataF = DateOnly.Parse(dataFim);
             // assert
-            Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<ArgumentException>(() =>
                 // act
                 new HolidayPeriod(dataIn, dataF)
             );
+            Assert.Equal("invalid arguments: start date >= end date.", ex.Message);
         }
 
         [Theory]

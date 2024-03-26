@@ -6,8 +6,8 @@ namespace Domain;
 
 public class HolidayPeriod : IHolidayPeriod
 {
-	DateOnly _startDate;
-	DateOnly _endDate;
+	public DateOnly _startDate;
+	public DateOnly _endDate;
 
 	int _status;
 

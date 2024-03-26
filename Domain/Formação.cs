@@ -4,7 +4,7 @@ namespace Domain;
 
     public class Formacao : IFormacao
     {
-         private string _strDescriçao;
+         public string _strDescriçao;
          private List<ICompetencias> _competenciasPrevias = new List<ICompetencias>();
          private List<ICompetencias> _competenciasAdquirir = new List<ICompetencias>();
          public List<PeriodoFormacao> _periodoDeFormacao = new List<PeriodoFormacao>();

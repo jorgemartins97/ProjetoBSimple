@@ -12,7 +12,9 @@ public class FormacaoTest
 
         public void WhenPassingCorrectData_ThenFormacaoIsInstantiated(string strDescriçao)
         {
-            new Formacao (strDescriçao);
+            var desc = new Formacao (strDescriçao);
+
+            Assert.Equal(strDescriçao, desc._strDescriçao);
         }
 
         [Theory]
@@ -23,11 +25,12 @@ public class FormacaoTest
             // arrange
 
             // assert 
-            Assert.Throws<ArgumentException>(() => 
+            var ex = Assert.Throws<ArgumentException>(() => 
         
              // act 
                 new Formacao(strDescricao)
                 );
+            Assert.Equal("Invalid arguments.", ex.Message);
         }
 
         [Fact]
@@ -72,7 +75,6 @@ public class FormacaoTest
             Assert.Equal(competencia1Mock.Object, result.Single());
         }
 
-
         [Fact]
         public void AddCompetenciaAdquirir_AdicionaCompetenciasCorretamente()
         {
@@ -92,6 +94,80 @@ public class FormacaoTest
         Assert.Contains(competencia1.Object, result); // Verifica se a primeira competência foi adicionada corretamente
         Assert.Contains(competencia2.Object, result); // Verifica se a segunda competência foi adicionada corretamente
         }
+
+ 
+        [Fact]
+        public void AddCompetenciaPrevia_NullSkill_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var formacao = new Formacao("Description");
+            var competenciaDouble = new Mock<ICompetencias>();
+ 
+            // Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaPrevia(null));
+ 
+            Assert.Equal("Competencias nao podem ser nulas!", exception.Message);
+        }
+
+        // [Fact]
+        // public void AddCompetenciaAdquirir_NullSkill_ThrowsArgumentNullException()
+        // {
+        //     // Arrange
+        //     var formacao = new Formacao("Description");
+        //     var competenciaDouble = new Mock<ICompetencias>();
+ 
+        //     // Act & Assert
+        //     var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(null));
+ 
+        //     Assert.Equal("Competencias nao podem ser nulas!", exception.Message);
+        // }
+
+        // [Fact]
+        // public void AddCompetenciaPrevia_SkillsAlreadyAdded_ThrowsInvalidOperationException()
+        // {
+        //     // Arrange
+        //     var competenciasMock = new Mock<ICompetencias>();
+        //     var formacao = new Formacao("Description");
+        //     formacao.AddCompetenciaPrevia(competenciasMock.Object);
+
+        //     // Act & Assert
+        //     var exception = Assert.Throws<InvalidOperationException>(() => formacao.AddCompetenciaPrevia( competenciasMock.Object));
+        //     Assert.Equal("Uma ou mais competencias ja estao adicionadas.", exception.Message);
+        // }
+        
+        [Fact]
+        public void AddCompetenciaAdquirir_SkillsAlreadyAdded_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var competenciasMock = new Mock<ICompetencias>();
+            var formacao = new Formacao("Description");
+            formacao.AddCompetenciaAdquirir(new List<ICompetencias> { competenciasMock.Object });
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(() => formacao.AddCompetenciaAdquirir(new List<ICompetencias> { competenciasMock.Object }));
+            Assert.Equal("Uma ou mais competencias ja estao adicionadas.", exception.Message);
+        }
+
+        [Fact]
+        public void AddCompetenciaAdquirir_EmptySkillsList_ThrowsArgumentException()
+        {
+            // Arrange
+            var formacao = new Formacao("Description");
+ 
+            // Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(new List<ICompetencias>()));
+            Assert.Equal("A lista nao pode ser vazia ou nula", exception.Message);
+        }
+
+        // [Fact]
+        // public void AddCompetenciaAdquirir_NullSkillsList_ThrowsArgumentException()
+        // {
+        //     // Arrange
+        //     var formacao = new Formacao("Description");
+ 
+        //     // Act & Assert
+        //     var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(null));
+        //     Assert.Equal("A lista nao pode ser vazia ou nula", exception.Message);
+        // }
 
     }
 

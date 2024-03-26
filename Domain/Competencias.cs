@@ -9,8 +9,8 @@ namespace Domain;
 
     public class Competencias : ICompetencias
     {
-    private string _strDescriçao;
-    private int _nivel;
+    public string _strDescriçao;
+    public int _nivel;
 
     public Competencias(string strDescriçao, int nivel) {
             if ( isValidParameters(strDescriçao, nivel)){

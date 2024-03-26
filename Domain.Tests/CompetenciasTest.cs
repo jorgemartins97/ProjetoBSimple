@@ -8,7 +8,10 @@ namespace Domain.Tests
 
         public void WhenPassingCorrectData_ThenCompetenciasIsInstantiated(string strDescriçao, int nivel)
         {
-        new Competencias( strDescriçao, nivel);
+         var comp = new Competencias( strDescriçao, nivel);
+
+         Assert.Equal(strDescriçao, comp._strDescriçao);
+         Assert.Equal(nivel, comp._nivel);
         }
 
         [Theory]
