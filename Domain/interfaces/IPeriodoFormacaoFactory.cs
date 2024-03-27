@@ -7,6 +7,6 @@ namespace Domain.interfaces
 {
     public interface IPeriodoFormacaoFactory
     {
-        PeriodoFormacao NewPeriodoFormacao(DateOnly startDate, DateOnly endDate);
+        IPeriodoFormacao NewPeriodoFormacao(DateOnly startDate, DateOnly endDate);
     }
 }

@@ -34,29 +34,19 @@ public class FormacaoTest
         }
 
         [Fact]
-        public void WhenRequestingAddPeriodoFormacao_ThenReturnPeriodoFormacao()
+        public void WhenRequestingAddPeriodoFormacao_DatasValidas_ThenReturnPeriodoFormacao()
         {
         // arrange
-            Mock<IColaborator> doubleColaborator = new Mock<IColaborator>();
+            var pfDouble = new Mock<IPeriodoFormacao>();
+            var pfFactoryDouble = new Mock<IPeriodoFormacaoFactory>();
             var formacao = new Formacao("olaamigos");
 
-            DateOnly dataInicio = new DateOnly(2024, 7, 1);
-            DateOnly dataFim = new DateOnly(2024, 7, 15);
+            pfFactoryDouble.Setup(hpF => hpF.NewPeriodoFormacao(new DateOnly(2024, 03, 02), new DateOnly(2024, 03, 07))).Returns(pfDouble.Object);
 
-            Mock<IPeriodoFormacaoFactory> pfFactoryDouble = new Mock<IPeriodoFormacaoFactory>();
-            Mock<PeriodoFormacao> pfDouble = new Mock<PeriodoFormacao>(dataInicio, dataFim);
- 
-            pfFactoryDouble.Setup(hpF => hpF.NewPeriodoFormacao(dataInicio, dataFim)).Returns(pfDouble.Object);
-            
-            // act
-            DateOnly pfDataInicio = new DateOnly(2024, 7, 1);
-            DateOnly pfDataFim = new DateOnly(2024, 7, 15);
-    
-            var periodoFormacao = formacao.AddPeriodoFormacao(pfFactoryDouble.Object, pfDataInicio, pfDataFim);
+            var result = formacao.AddPeriodoFormacao(pfFactoryDouble.Object, new DateOnly(2024, 03, 02), new DateOnly(2024, 03, 07));
  
             // assert
-            Assert.Equal(dataInicio, pfDataInicio);
-            Assert.Equal(dataFim, pfDataFim);
+            Assert.Equal(result, pfDouble.Object);
         }
 
         [Fact]
@@ -108,32 +98,6 @@ public class FormacaoTest
  
             Assert.Equal("Competencias nao podem ser nulas!", exception.Message);
         }
-
-        // [Fact]
-        // public void AddCompetenciaAdquirir_NullSkill_ThrowsArgumentNullException()
-        // {
-        //     // Arrange
-        //     var formacao = new Formacao("Description");
-        //     var competenciaDouble = new Mock<ICompetencias>();
- 
-        //     // Act & Assert
-        //     var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(null));
- 
-        //     Assert.Equal("Competencias nao podem ser nulas!", exception.Message);
-        // }
-
-        // [Fact]
-        // public void AddCompetenciaPrevia_SkillsAlreadyAdded_ThrowsInvalidOperationException()
-        // {
-        //     // Arrange
-        //     var competenciasMock = new Mock<ICompetencias>();
-        //     var formacao = new Formacao("Description");
-        //     formacao.AddCompetenciaPrevia(competenciasMock.Object);
-
-        //     // Act & Assert
-        //     var exception = Assert.Throws<InvalidOperationException>(() => formacao.AddCompetenciaPrevia( competenciasMock.Object));
-        //     Assert.Equal("Uma ou mais competencias ja estao adicionadas.", exception.Message);
-        // }
         
         [Fact]
         public void AddCompetenciaAdquirir_SkillsAlreadyAdded_ThrowsInvalidOperationException()
@@ -158,16 +122,16 @@ public class FormacaoTest
             Assert.Equal("A lista nao pode ser vazia ou nula", exception.Message);
         }
 
-        // [Fact]
-        // public void AddCompetenciaAdquirir_NullSkillsList_ThrowsArgumentException()
-        // {
-        //     // Arrange
-        //     var formacao = new Formacao("Description");
+        [Fact]
+        public void AddCompetenciaAdquirir_NullSkillsList_ThrowsArgumentException()
+        {
+            // Arrange
+            var formacao = new Formacao("Description");
  
-        //     // Act & Assert
-        //     var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(null));
-        //     Assert.Equal("A lista nao pode ser vazia ou nula", exception.Message);
-        // }
+            // Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() => formacao.AddCompetenciaAdquirir(null));
+            Assert.Equal("A lista nao pode ser vazia ou nula", exception.Message);
+        }
 
     }
 

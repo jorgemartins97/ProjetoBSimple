@@ -56,8 +56,9 @@ public class Colaborator : IColaborator
 
 		return valid;
 	}
-
-	public string getName() {
-		return _strName;
-	}
 }
+
+// 	public string getName() {
+// 		return _strName;
+// 	}
+// }

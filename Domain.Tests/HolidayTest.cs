@@ -14,13 +14,12 @@ public class HolidayTest
 
     }
 
-
     [Fact]
     public void WhenPassingNullAsColaborator_ThenThrowsException()
     {
-        Assert.Throws<ArgumentException>(() => new Holiday(null));
+        var ex = Assert.Throws<ArgumentException>(() => new Holiday(null));
+        Assert.Equal("Invalid argument: colaborator must be non null", ex.Message);
     }
-
 
     [Fact]
     public void HasColaborador_ShouldReturnTrue_WhenColaboratorEquals()
@@ -120,14 +119,10 @@ public class HolidayTest
         
         // Arrange
         var colabDouble = new Mock <IColaborator>();
-
         var holiday = new Holiday(colabDouble.Object);
-
         var holidayPeriodFactory = new Mock<IHolidayPeriodFactory>();
 
-
         var holidayPeriod1 = new Mock<IHolidayPeriod>();
-        // var holidayPeriod2 = new Mock<IHolidayPeriod>();
 
         holidayPeriodFactory.Setup(hpF => hpF.NewHolidayPeriod(It.IsAny<DateOnly>(),It.IsAny<DateOnly>())).Returns(holidayPeriod1.Object);
         holidayPeriod1.Setup(hp => hp.CalcularNumeroDias()).Returns(10);
@@ -138,11 +133,29 @@ public class HolidayTest
 
         //Assert
         Assert.NotNull(cDays);
-        Assert.Equal(colabDouble.Object, cDays);
-
-        
+        Assert.Equal(colabDouble.Object, cDays); 
     }
 
+    [Fact]
+        public void GetColaboratorWithHolidaysLongerThan_ShouldThrowException_WhenColaboratorNull() {
+        
+        // Arrange
+        var colabDouble = new Mock <IColaborator>();
+        var holiday = new Holiday(colabDouble.Object);
+        var holidayPeriodFactory = new Mock<IHolidayPeriodFactory>();
+
+        var holidayPeriod1 = new Mock<IHolidayPeriod>();
+
+        holidayPeriodFactory.Setup(hpF => hpF.NewHolidayPeriod(It.IsAny<DateOnly>(),It.IsAny<DateOnly>())).Returns(holidayPeriod1.Object);
+
+        holidayPeriod1.Setup(hp => hp.CalcularNumeroDias()).Returns(5);
+
+        holiday.addHolidayPeriod(holidayPeriodFactory.Object, It.IsAny<DateOnly>(),It.IsAny<DateOnly>());
+
+        //Assert
+        var ex = Assert.Throws<ArgumentException>(() => holiday.GetColaboratorsWithHolidaysLongerThan(5));
+        Assert.Equal("Colaborator must be non-null", ex.Message);
+    }
 
     [Fact]
     public void CalculateTotalHolidayForColaborator_ReturnsCorrectTotalDays_WhenColaboratorHasHolidays()
@@ -177,6 +190,7 @@ public class HolidayTest
         // Assert
         Assert.Equal(4, totalDays);
     }
+    
     
     
 

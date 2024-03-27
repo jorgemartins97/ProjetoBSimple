@@ -16,7 +16,8 @@ namespace Domain.Tests
         public void WhenPassingNullAsColaborator_ThenThrowsException()
         {
             Mock<IColaborator> colabDouble = new Mock<IColaborator>();
-            Assert.Throws<ArgumentException>(() => new Associacao(null));
+            var ex = Assert.Throws<ArgumentException>(() => new Associacao(null));
+            Assert.Equal("Invalid argument: colaborator must be non null", ex.Message);
         }
  
         [Fact]
@@ -48,6 +49,18 @@ namespace Domain.Tests
             Assert.False(result);
         }
  
- 
+        [Fact]
+        public void GetColaborator_ReturnsCorrectColaborator()
+        {
+            // Arrange
+            Mock<IColaborator> colabDouble = new Mock<IColaborator>();
+            Associacao association = new Associacao(colabDouble.Object);
+
+            // Act
+            var result = association.getColaborador();
+
+            // Assert
+            Assert.Equal(colabDouble.Object, result);
+        }
     }
 }

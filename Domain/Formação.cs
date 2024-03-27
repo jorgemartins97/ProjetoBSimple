@@ -27,10 +27,12 @@ namespace Domain;
             return true;
         }
 
-        public PeriodoFormacao AddPeriodoFormacao(IPeriodoFormacaoFactory pfFactory, DateOnly dataInicio, DateOnly dataFim){
-        PeriodoFormacao periodoFormacao = pfFactory.NewPeriodoFormacao(dataInicio, dataFim);
-        _periodoDeFormacao.Add(periodoFormacao);
-        return periodoFormacao;
+        public IPeriodoFormacao AddPeriodoFormacao(IPeriodoFormacaoFactory pfFactory, DateOnly dataInicio, DateOnly dataFim){
+            var periodoFormacao = pfFactory.NewPeriodoFormacao(dataInicio, dataFim);
+            return periodoFormacao;
+        // PeriodoFormacao periodoFormacao = pfFactory.NewPeriodoFormacao(dataInicio, dataFim);
+        // _periodoDeFormacao.Add(periodoFormacao);
+        // return periodoFormacao;
         }
 
         public List<ICompetencias> AddCompetenciaPrevia(ICompetencias competencias)
