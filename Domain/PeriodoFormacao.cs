@@ -4,8 +4,8 @@ namespace Domain;
 
 public class PeriodoFormacao : IPeriodoFormacao
 {
-    private DateOnly _dataInicio;
-    private DateOnly _datafim;
+    public DateOnly _dataInicio;
+    public DateOnly _datafim;
 
         public PeriodoFormacao(DateOnly dataInicio, DateOnly dataFim){
             if( dataInicio < dataFim){

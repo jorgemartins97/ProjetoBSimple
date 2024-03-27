@@ -1,32 +1,39 @@
 using Domain.interfaces;
+using Microsoft.VisualBasic;
 
 namespace Domain.Tests
 {
     public class ProjetoTest
     {
-        [Fact]
-        public void WhenPassingCorrectData_ThenProjectIsInstantiated()
+        [Theory]
+        [InlineData("Teste", "2024-03-12", "2024-03-13")]
+        [InlineData("qqqqqqqqqqwwwwwwwwwweeeeeeeeeerrrrrrrrrrtttttttttt", "2024-03-12", "2024-03-13")]
+        [InlineData("Teste", "2024-03-13", "2024-03-13")]
+        public void WhenPassingCorrectData_ThenProjectIsInstantiated(string strNome, string dataInicio, string dataFim)
         {
-            string strNome = "teste";
-            DateOnly dataIn = new DateOnly(2024,1,1);
-            DateOnly dataF = new DateOnly(2024,3,1);
-            new Projeto(strNome, dataIn, dataF);
+            var dataIn =DateOnly.Parse(dataInicio);
+            var dataF = DateOnly.Parse(dataFim);
+            var projeto = new Projeto(strNome, dataIn, dataF);
+
+            //assert
+            Assert.Equal(strNome, projeto._strName);
         }
  
         [Theory]
-        [InlineData("qweqwe qweqwefdgdf gdf gdfgdfg dfgdf fd dfgdfgdf fdg dfg dfgfhfghgfhfgd fgh  fghfghfghfghfghfg d gdfjgjghjhg  fgfhfghfghgf")]
-        [InlineData("    ")]
-        [InlineData("1112321")]
-        [InlineData(null)]
-        public void WhenPassingInvalidProjeto_ThenThrowsException(string strNome)
+        [InlineData("qweqwe qweqwefdgdf gdf gdfgdfg dfgdf fd dfgdfgdf fdg dfg dfgfhfghgfhfgd fgh  fghfghfghfghfghfg d gdfjgjghjhg  fgfhfghfghgf", "2024-03-12", "2024-03-13")]
+        [InlineData("    ", "2024-03-12", "2024-03-13")]
+        [InlineData("1112321", "2024-03-12", "2024-03-13")]
+        [InlineData(null, "2024-03-12", "2024-03-13")]
+        public void WhenPassingInvalidProjeto_ThenThrowsException(string strNome, string dataInicio, string dataFim)
         {
-            DateOnly dataIn = new DateOnly(2024,1,1);
-            DateOnly dataF = new DateOnly(2024,3,1);
+            var dataIn =DateOnly.Parse(dataInicio);
+            var dataF = DateOnly.Parse(dataFim);
             // assert
-            Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<ArgumentException>(() =>
                 // actS
                 new Projeto(strNome, dataIn, dataF)
             );
+            Assert.Equal("Invalid arguments.", ex.Message);
         }
  
         [Theory]
@@ -35,11 +42,33 @@ namespace Domain.Tests
             DateOnly dataIn = new DateOnly(2024,1,1);
             DateOnly dataF = new DateOnly(2023,3,1);
             // assert
-            Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<ArgumentException>(() =>
                 
             // act
                 new Projeto(strNome, dataIn, dataF)
             );
+            Assert.Equal("Invalid arguments.", ex.Message);
+        }
+
+        [Fact]
+        public void IsColaboratorInProject_ReturnsTrue_WhenColaboratorIsFound()
+        {
+            // Arrange
+            var projeto = new Projeto("nome", new DateOnly(2024, 01, 01), new DateOnly(2024, 01, 03));
+            var colaboratorMock = new Mock<IColaborator>();
+            var associationMock = new Mock<IAssociacao>();
+            var associationFactoryMock = new Mock<IAssociationFactory>();
+
+            // Configuração dos mocks
+            associationFactoryMock.Setup(af => af.NewAssociation(colaboratorMock.Object)).Returns(associationMock.Object);
+            associationMock.Setup(a => a.isContainedColaborator(colaboratorMock.Object)).Returns(true);
+
+            projeto.addAssociacao(associationFactoryMock.Object, colaboratorMock.Object);
+            // Act
+            var result = projeto.isColaboratorInProject(colaboratorMock.Object);
+
+            // Assert
+            Assert.True(result);
         }
 
         [Fact]
@@ -64,6 +93,7 @@ namespace Domain.Tests
             // Assert
             Assert.False(result);
         }
+
 
          [Fact]
         public void AddAssociacao_WhenColaboratorIsValid_AddsAssociation()
@@ -123,7 +153,8 @@ namespace Domain.Tests
             project.addAssociacao(associationFactoryMock.Object, colabMock);
  
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => project.addAssociacao(associationFactoryMock.Object, colabMock));
+            var ex = Assert.Throws<ArgumentException>(() => project.addAssociacao(associationFactoryMock.Object, colabMock));
+            Assert.Equal("Colaborador ja esta associado ao projeto (Parameter 'colaborator')", ex.Message);
         }
  
         [Fact]
@@ -134,29 +165,11 @@ namespace Domain.Tests
             var project = new Projeto("nome", new DateOnly(2024, 01, 01), new DateOnly(2024, 01, 03));
  
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => project.addAssociacao(associationFactoryDouble.Object, null));
+            var ex = Assert.Throws<ArgumentNullException>(() => project.addAssociacao(associationFactoryDouble.Object, null));
+            Assert.Equal("Colaborador nao pode ser nulo. (Parameter 'colaborator')", ex.Message);
         }
 
-    [Fact]
-    public void IsColaboratorInProject_ReturnsTrue_WhenColaboratorIsFound()
-    {
-        // Arrange
-        var projeto = new Projeto("nome", new DateOnly(2024, 01, 01), new DateOnly(2024, 01, 03));
-        var colaboratorMock = new Mock<IColaborator>();
-        var associationMock = new Mock<IAssociacao>();
-        var associationFactoryMock = new Mock<IAssociationFactory>();
 
-        // Configuração dos mocks
-        associationFactoryMock.Setup(af => af.NewAssociation(colaboratorMock.Object)).Returns(associationMock.Object);
-        associationMock.Setup(a => a.isContainedColaborator(colaboratorMock.Object)).Returns(true);
-
-        projeto.addAssociacao(associationFactoryMock.Object, colaboratorMock.Object);
-        // Act
-        var result = projeto.isColaboratorInProject(colaboratorMock.Object);
-
-        // Assert
-        Assert.True(result);
-    }
 
     [Fact]
     public void IsColaboratorInProject_ReturnsFalse_WhenColaboratorIsNotFound()

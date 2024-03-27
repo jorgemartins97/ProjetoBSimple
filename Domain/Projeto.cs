@@ -4,33 +4,41 @@ using Domain.interfaces;
 namespace Domain;
 
 public class Projeto : IProjeto{
-    private string? _strName;
- 
-    private DateOnly? _startDate;
- 
-    private DateOnly? _endDate;
- 
-    private List<IAssociacao> _associations = new List<IAssociacao>();
-	private static List<Projeto> _todosProjetos = new List<Projeto>();
+    public string? _strName;
+    public DateOnly? _startDate;
+    public DateOnly? _endDate;
+    public List<IAssociacao> _associations = new List<IAssociacao>();
+	// private static List<Projeto> _todosProjetos = new List<Projeto>();
 
 	public Projeto(string strName, DateOnly startDate, DateOnly endDate){
-		if( startDate < endDate && strName!=null &&
-			strName.Length < 50 &&
-			!string.IsNullOrWhiteSpace(strName) &&
-			!ContainsAny(strName, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])) {
-			this._startDate = startDate;
-			this._endDate = endDate;
-            this._strName = strName;
-			_todosProjetos.Add(this);
-
-		}
-		else
-			throw new ArgumentException("invalid arguments: start date >= end date or name is invalid.");
+        _associations = new List<IAssociacao>();
+		if (isValidParameters(strName, startDate, endDate))
+            {
+                _strName = strName;
+                _startDate = startDate;
+                _endDate = endDate;
+            }
+            else
+                throw new ArgumentException("Invalid arguments.");
 	}
 
-    public Projeto()
+     public Projeto()
     {
     }
+
+    private bool isValidParameters(string strName, DateOnly startDate, DateOnly endDate)
+        {
+            if (strName == null ||
+                strName.Length > 50 ||
+                string.IsNullOrWhiteSpace(strName) ||
+                ContainsAny(strName, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]))
+                return false;
+            if (startDate > endDate)
+                return false;
+            return true;
+        }
+
+   
 
     private bool ContainsAny(string stringToCheck, params string[] parameters){
 		return parameters.Any(parameter => stringToCheck.Contains(parameter));
