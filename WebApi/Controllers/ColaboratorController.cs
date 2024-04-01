@@ -69,7 +69,7 @@ namespace WebApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(colaborator);
         }
 
         // POST: api/Colaborator
